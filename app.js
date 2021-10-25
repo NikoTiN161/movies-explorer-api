@@ -39,7 +39,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 mongoose.connect(MONGO_URL);
 
-app.use(router);
+app.use('/api', router);
 
 app.use(errorLogger);
 app.use(errors());
