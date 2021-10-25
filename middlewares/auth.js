@@ -3,7 +3,6 @@ import UnauthorizedError from '../errors/UnauthorizedError';
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
-// eslint-disable-next-line consistent-return
 function auth(req, res, next) {
   const { jwt } = req.cookies;
   if (!jwt) {
