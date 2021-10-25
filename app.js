@@ -8,10 +8,12 @@ import { requestLogger, errorLogger } from './middlewares/logger';
 import handleErrors from './middlewares/handleErrors';
 import router from './routes';
 
-const { MONGO_URL = 'mongodb://localhost:27017/moviesdb' } = process.env;
-const { PORT = 3001 } = process.env;
-const { DOMIANS = ['https://mesto.nikotin.nomoredomains.club', 'http://mesto.nikotin.nomoredomains.club', `localhost:${PORT}`] } = process.env;
-const { METHODS = ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'] } = process.env;
+const {
+  MONGO_URL = 'mongodb://localhost:27017/moviesdb',
+  PORT = 3001,
+  DOMIANS = ['https://mesto.nikotin.nomoredomains.club', 'http://mesto.nikotin.nomoredomains.club', `localhost:${PORT}`],
+  METHODS = ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+} = process.env;
 
 const corsOptions = {
   origin: DOMIANS,
