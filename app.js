@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -11,7 +12,7 @@ import router from './routes';
 const {
   MONGO_URL = 'mongodb://localhost:27017/moviesdb',
   PORT = 3001,
-  DOMIANS = ['https://mesto.nikotin.nomoredomains.club', 'http://mesto.nikotin.nomoredomains.club', `localhost:${PORT}`],
+  DOMIANS = ['https://movies.nomoredomains.rocks', 'http://movies.nomoredomains.rocks', `localhost:${PORT}`],
   METHODS = ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
 } = process.env;
 
@@ -21,10 +22,15 @@ const corsOptions = {
   methods: METHODS,
   credentials: true,
 };
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+});
 
 const app = express();
 
 app.use(requestLogger);
+app.use(limiter);
 app.use(helmet());
 app.use(cors(corsOptions));
 
