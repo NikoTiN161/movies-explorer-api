@@ -3,8 +3,6 @@ import NotFoundError from '../errors/NotFoundError';
 import BadRequestError from '../errors/BadRequestError';
 import ForbiddenError from '../errors/ForbiddenError';
 
-// убрать throw
-
 export const getMovies = (req, res, next) => {
   Movie.find({ owner: req.user._id })
     .populate('owner')
@@ -80,34 +78,3 @@ export const deleteMovie = (req, res, next) => {
     })
     .catch(next);
 };
-
-// export const like = (req, res, next) => {
-//   Movie.findByIdAndUpdate(
-//     req.params.cardId,
-//     { $addToSet: { likes: req.user._id } },
-//     { new: true },
-//   )
-//     .populate(['owner', 'likes'])
-//     .then((card) => {
-//       if (!card) {
-//         throw new NotFoundError('Карточка не найдена');
-//       }
-//       res.send(card);
-//     })
-//     .catch(next);
-// };
-
-// export const dislike = (req, res, next) => {
-//   Movie.findByIdAndUpdate(
-//     req.params.cardId,
-//     { $pull: { likes: req.user._id } },
-//     { new: true },
-//   )
-//     .populate(['owner', 'likes'])
-//     .then((card) => {
-//       if (card) {
-//         res.send(card);
-//       } else throw new ReferenceError();
-//     })
-//     .catch(next);
-// };
