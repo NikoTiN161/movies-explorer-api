@@ -7,9 +7,6 @@ export const getMovies = (req, res, next) => {
   Movie.find({ owner: req.user._id })
     .populate('owner')
     .then((cards) => {
-      if (!cards) {
-        throw new NotFoundError('Карточки не найдены');
-      }
       res.send(cards);
     })
     .catch(next);
@@ -59,18 +56,13 @@ export const createMovie = (req, res, next) => {
 
 export const deleteMovie = (req, res, next) => {
   Movie.findById({ _id: req.params.movieId })
-    .then((card) => {
-      if (!card) {
+    .then((movie) => {
+      if (!movie) {
         throw new NotFoundError('Карточка не найдена');
       }
-      if (req.user._id === card.owner.toString()) {
-        Movie.findByIdAndRemove({ _id: req.params.cardId })
-          .then((data) => {
-            if (!data) {
-              throw new ReferenceError();
-            }
-            res.send({ message: 'Карточка удалена' });
-          })
+      if (req.user._id === movie.owner.toString()) {
+        movie.remove()
+          .then(() => res.send({ message: movie }))
           .catch(next);
       } else {
         throw new ForbiddenError('Вы не владелец карточки');

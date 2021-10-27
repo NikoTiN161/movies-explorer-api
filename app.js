@@ -1,10 +1,10 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { errors } from 'celebrate';
+import limiter from './middlewares/limiter';
 import { requestLogger, errorLogger } from './middlewares/logger';
 import handleErrors from './middlewares/handleErrors';
 import router from './routes';
@@ -22,10 +22,6 @@ const corsOptions = {
   methods: METHODS,
   credentials: true,
 };
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-});
 
 const app = express();
 

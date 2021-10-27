@@ -34,7 +34,8 @@ export const validateCreateMovie = celebrate({
 
 export const validateDeleteteMovie = celebrate({
   params: Joi.object().keys({
-    movieId: Joi.string().required().hex().length(24),
+    movieId: Joi.string().required().hex().length(24)
+      .message('некорректный id фильма'),
   }),
 });
 

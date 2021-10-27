@@ -54,7 +54,8 @@ export const createUser = (req, res, next) => {
           }
           return next(err);
         });
-    });
+    })
+    .catch(next);
 };
 
 export const getUserMe = (req, res, next) => {
